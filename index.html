@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HidoiTamashi • Furry Artist Commissions</title>
+  <meta name="description" content="Furry art commissions by HidoiTamashi — headshots, fullbodies, ref sheets and more." />
+  <style>
+    /* Basic reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    :root{
+      --bg:#0f0f12;
+      --panel:#17171d;
+      --ink:#ececf1;
+      --muted:#b9b9c6;
+      --accent:#8EE6A2;
+      --accent-2:#7CC7FF;
+      --warn:#FFB57F;
+      --link:#9DDCFF;
+      --border:#2a2a34;
+      --shadow: rgba(0,0,0,.3);
+      --radius:14px;
+      --radius-sm:10px;
+      --maxw:1100px;
+    }
+    /* Light theme variables */
+    .theme-light{
+      --bg:#f7f8fb;
+      --panel:#ffffff;
+      --ink:#0f1117;
+      --muted:#48506b;
+      --accent:#1fd07b;
+      --accent-2:#399cff;
+      --link:#2563eb;
+      --border:#e6e8f0;
+      --shadow: rgba(0,0,0,.08);
+    }
+
+    body{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 100% -10%, rgba(126,229,255,.15), transparent 50%), 
+                  radial-gradient(1200px 800px at -10% 110%, rgba(142,230,162,.12), transparent 50%), var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      transition: background .3s ease, color .3s ease;
+    }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap{ max-width: var(--maxw); margin: 0 auto; padding: 28px 20px; }
+    header{
+      position: sticky; top:0; z-index: 5;
+      backdrop-filter: saturate(140%) blur(8px);
+      background: linear-gradient(to bottom, rgba(15,15,18,.9), rgba(15,15,18,.6));
+      border-bottom: 1px solid var(--border);
+    }
+    .theme-light header{
+      background: linear-gradient(to bottom, rgba(255,255,255,.85), rgba(255,255,255,.6));
+    }
+    .nav{ display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .brand{ display:flex; align-items:center; gap:12px; font-weight:700; letter-spacing:.2px; }
+    .avatar{
+      width:40px; height:40px; border-radius:12px; background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display:grid; place-items:center; color:#0e0e12; font-weight:900;
+      box-shadow: 0 6px 24px var(--shadow);
+    }
+    .controls{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .control{
+      display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:12px;
+      background: linear-gradient(180deg, #2a2a34, #1c1c23);
+      color: var(--ink); border:1px solid var(--border);
+      cursor:pointer; user-select:none;
+    }
+    .theme-light .control{ background: linear-gradient(180deg, #ffffff, #f3f5f9); }
+    .cta{
+      display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:12px;
+      background: linear-gradient(180deg, var(--accent), #69d88a);
+      color:#0c0f0c; font-weight:700; border: 0; cursor:pointer;
+      box-shadow: 0 8px 28px rgba(114, 255, 165, .35);
+    }
+    .cta.secondary{
+      background: linear-gradient(180deg, #2a2a34, #1c1c23);
+      color: var(--ink); border:1px solid var(--border); box-shadow: none;
+    }
+    .theme-light .cta.secondary{
+      background: linear-gradient(180deg, #ffffff, #f3f5f9);
+    }
+    .hero{ display:grid; grid-template-columns: 1.2fr .8fr; gap: 24px; align-items:center; margin-top: 22px; }
+    .hero-card{
+      background: linear-gradient(180deg, var(--panel), #121219);
+      border:1px solid var(--border); border-radius: var(--radius);
+      padding: 26px; box-shadow: 0 16px 40px var(--shadow);
+    }
+    .theme-light .hero-card{
+      background: linear-gradient(180deg, var(--panel), #f4f7fb);
+    }
+    .hero h1{ font-size: clamp(28px, 3.2vw, 46px); line-height:1.15; margin:.1em 0 .4em; }
+    .pill{ display:inline-flex; align-items:center; gap:8px; font-size:14px; color: var(--muted);
+      padding:8px 12px; border: 1px solid var(--border); border-radius: 999px; }
+    .hero-art{
+      min-height: 260px; border-radius: var(--radius);
+      background:
+        radial-gradient(180px 140px at 20% 20%, rgba(142,230,162,.15), transparent 40%),
+        radial-gradient(240px 180px at 85% 60%, rgba(124,199,255,.18), transparent 45%),
+        linear-gradient(160deg, #17171d, #121219);
+      border:1px solid var(--border);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 18px 48px var(--shadow);
+      display:grid; place-items:center; padding: 22px;
+      text-align:center; color: var(--muted);
+    }
+    .theme-light .hero-art{
+      background:
+        radial-gradient(180px 140px at 20% 20%, rgba(142,230,162,.15), transparent 40%),
+        radial-gradient(240px 180px at 85% 60%, rgba(124,199,255,.18), transparent 45%),
+        linear-gradient(160deg, #ffffff, #f4f7fb);
+    }
+    .grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:18px; }
+    section{ margin: 46px 0; }
+    h2{ font-size: clamp(22px,2.2vw,30px); margin: 0 0 12px; }
+    .card{
+      background: var(--panel); border:1px solid var(--border); border-radius: var(--radius-sm);
+      padding:18px;
+    }
+    .theme-light .card{ background: var(--panel); }
+    .price-tag{ font-size: 22px; font-weight: 800; }
+    .muted{ color: var(--muted); font-size: 14px; }
+    ul { padding-left: 18px; }
+    .prices .card{ display:flex; flex-direction:column; gap:10px; }
+    .prices .card .title{ font-weight:800; letter-spacing:.2px; }
+    .note{ font-size: 13px; color: var(--muted); }
+    .tos li{ margin-bottom:.4em; }
+    footer{
+      border-top:1px solid var(--border);
+      color: var(--muted);
+      padding: 26px 20px 60px;
+      text-align:center;
+    }
+    form input, form textarea, form select{
+      width:100%; padding:12px 12px; border-radius:10px; border:1px solid var(--border);
+      background: var(--panel); color: var(--ink);
+    }
+    form textarea{ min-height: 120px; resize: vertical; }
+    form .row{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+    form button{ margin-top:10px; }
+    @media (max-width: 900px){
+      .hero{ grid-template-columns: 1fr; }
+      .grid{ grid-template-columns: 1fr; }
+      form .row{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <div class="avatar">HT</div>
+        <div>HidoiTamashi • <span data-t="brand-role">Furry Artist</span></div>
+      </div>
+      <div class="controls">
+        <button id="langToggle" class="control" aria-label="Change language">EN / IT</button>
+        <button id="themeToggle" class="control" aria-label="Toggle theme">🌗 Theme</button>
+        <a class="cta secondary" href="#prices" data-t="nav-prices">Price List</a>
+        <a class="cta" href="#contact" data-t="nav-cta">Request a Commission</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-card">
+        <span class="pill" data-t="hero-open">🦊 Open for Commissions</span>
+        <h1 data-t="hero-title">Expressive furry art — headshots, chibis, fullbodies & ref sheets.</h1>
+        <p class="muted" data-t="hero-sub">Hi! I’m <strong>HidoiTamashi</strong>. I create character-focused, stylized furry illustrations with clean lines and bold shapes. Friendly workflow, clear pricing, and fast communication.</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+          <a class="cta" href="#prices" data-t="btn-see-prices">See Prices</a>
+          <a class="cta secondary" href="#contact" data-t="btn-contact">Contact Me</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div>
+          <div style="font-weight:800; font-size:20px; margin-bottom:6px;" data-t="hero-vibe-title">Your character, your vibe</div>
+          <div class="muted" data-t="hero-vibe-sub">Drop me a short brief + refs — I’ll handle the poses, energy, and polish ✨</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="prices">
+      <h2 data-t="prices-title">Price List (EUR)</h2>
+      <p class="note" data-t="prices-note">Modest baseline pricing for personal use. USD shown for convenience. Final quotes may vary for complexity.</p>
+      <div class="grid prices">
+        <div class="card">
+          <div class="title" data-t="p-hs">Headshot / Icon</div>
+          <div class="price-tag">€25 <span class="muted">(≈ $27)</span></div>
+          <ul>
+            <li data-t="p-hs-1">Clean lines, simple background</li>
+            <li data-t="p-hs-2">Great for avatars & stickers</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="title" data-t="p-bust">Bust / Chest-up</div>
+          <div class="price-tag">€35 <span class="muted">(≈ $38)</span></div>
+          <ul>
+            <li data-t="p-bust-1">Extra expression & detail</li>
+            <li data-t="p-bust-2">Basic shading</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="title" data-t="p-half">Half-Body</div>
+          <div class="price-tag">€45 <span class="muted">(≈ $49)</span></div>
+          <ul>
+            <li data-t="p-half-1">Dynamic pose</li>
+            <li data-t="p-half-2">Simple prop OK</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="title" data-t="p-full">Fullbody</div>
+          <div class="price-tag">€65 <span class="muted">(≈ $71)</span></div>
+          <ul>
+            <li data-t="p-full-1">Clean lineart + flat colors</li>
+            <li data-t="p-full-2">Shaded version: +€10</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="title" data-t="p-chibi">Chibi</div>
+          <div class="price-tag">€30 <span class="muted">(≈ $33)</span></div>
+          <ul>
+            <li data-t="p-chibi-1">Super cute style</li>
+            <li data-t="p-chibi-2">Great for emotes</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="title" data-t="p-ref">Ref Sheet (2-view)</div>
+          <div class="price-tag">€95 <span class="muted">(≈ $104)</span></div>
+          <ul>
+            <li data-t="p-ref-1">Front + back, color palette</li>
+            <li data-t="p-ref-2">Small details & notes</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <strong data-t="addons-title">Add-ons</strong>
+        <ul>
+          <li data-t="addons-1">Extra character: +70% of base price</li>
+          <li data-t="addons-2">Complex design/armor/wings: +€10–€25</li>
+          <li data-t="addons-3">Simple background: included • Scene background: +€10–€30</li>
+          <li data-t="addons-4">Commercial license (merch, promo, etc.): +50%</li>
+        </ul>
+        <p class="note" data-t="addons-note">SFW only. No hateful or illegal content. If unsure, just ask!</p>
+      </div>
+    </section>
+
+    <section id="workflow">
+      <h2 data-t="flow-title">How It Works</h2>
+      <div class="grid">
+        <div class="card">
+          <strong data-t="flow-1-title">1) Brief & Quote</strong>
+          <p class="muted" data-t="flow-1">Send refs + short description (pose/mood). I’ll confirm a final quote and ETA.</p>
+        </div>
+        <div class="card">
+          <strong data-t="flow-2-title">2) Invoice & Sketch</strong>
+          <p class="muted" data-t="flow-2">Payment upfront via PayPal or Ko-fi. I’ll share a clean sketch for approval.</p>
+        </div>
+        <div class="card">
+          <strong data-t="flow-3-title">3) Edits & Delivery</strong>
+          <p class="muted" data-t="flow-3">Two minor revisions included at sketch/color stage. Final PNG/JPG in high-res.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="tos">
+      <h2 data-t="tos-title">Terms of Service</h2>
+      <div class="card tos">
+        <ul>
+          <li data-t="tos-1"><strong>Payment:</strong> upfront via PayPal or Ko-fi in EUR (USD accepted).</li>
+          <li data-t="tos-2"><strong>Turnaround:</strong> typically 1–3 weeks depending on complexity and queue.</li>
+          <li data-t="tos-3"><strong>Revisions:</strong> 2 minor revisions included; extra edits may incur fees.</li>
+          <li data-t="tos-4"><strong>Usage:</strong> personal use only unless a commercial license is purchased (+50%).</li>
+          <li data-t="tos-5"><strong>Refunds:</strong> full refund before sketch starts; 50% after sketch; none after lineart approval.</li>
+          <li data-t="tos-6"><strong>Posting:</strong> I retain rights to showcase the artwork in my portfolio/socials. Credit appreciated if you post.</li>
+          <li data-t="tos-7"><strong>Files:</strong> final delivery in PNG/JPG; source files not included by default.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2 data-t="contact-title">Contact & Request Form</h2>
+      <div class="card">
+        <p class="muted" data-t="contact-sub">Use the form to request a quote. I’ll reply by email.</p>
+        <form id="commissionForm">
+          <div class="row">
+            <div>
+              <label for="name" data-t="f-name-label">Your name</label><br/>
+              <input id="name" name="name" type="text" placeholder="Name / Handle" required>
+            </div>
+            <div>
+              <label for="email" data-t="f-email-label">Email</label><br/>
+              <input id="email" name="email" type="email" placeholder="you@example.com" required>
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label for="type" data-t="f-type-label">Commission type</label><br/>
+              <select id="type" name="type" required>
+                <option>Headshot/Icon</option>
+                <option>Bust</option>
+                <option>Half-Body</option>
+                <option>Fullbody</option>
+                <option>Chibi</option>
+                <option>Ref Sheet (2-view)</option>
+              </select>
+            </div>
+            <div>
+              <label for="deadline" data-t="f-deadline-label">Deadline (optional)</label><br/>
+              <input id="deadline" name="deadline" type="date">
+            </div>
+          </div>
+          <div>
+            <label for="details" data-t="f-details-label">Brief & references (links allowed)</label><br/>
+            <textarea id="details" name="details" placeholder="Refs links, pose/mood, notes…" required></textarea>
+          </div>
+          <button class="cta" type="submit" data-t="f-submit">Send Request</button>
+        <div style="margin:14px 0;">
+          <strong>Social</strong>
+          <ul>
+            <li>Threads: <a href="https://www.threads.com/@hidoitamashiart?igshid=NTc4MTIwNjQ2YQ==" rel="me">@HidoiTamashi</a></li>
+            <li>Instagram: <a href="https://www.instagram.com/HidoiTamashi/" rel="me">@HidoiTamashi</a></li>
+            <li>Ko‑fi: <a href="https://ko-fi.com/HidoiTamashi" rel="me">ko-fi.com/HidoiTamashi</a></li>
+            <li>FurAffinity: <a href="https://www.furaffinity.net/user/hidoitamashi/" rel="me">/user/hidoitamashi</a></li>
+          </ul>
+        </div>
+
+          <p class="note" data-t="contact-note">Submits via email (mailto). If your email client doesn’t open, write to <a href="mailto:commissions@hidoitamashi.art">commissions@hidoitamashi.art</a>.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> HidoiTamashi — <span data-t="rights">All rights reserved.</span>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Theme toggle (persists)
+    const root = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('ht_theme');
+    if(savedTheme === 'light'){ document.body.classList.add('theme-light'); }
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('theme-light');
+      localStorage.setItem('ht_theme', document.body.classList.contains('theme-light') ? 'light' : 'dark');
+    });
+
+    // Language toggle (EN default, IT alternative)
+    const strings = {
+      en: {
+        "brand-role":"Furry Artist",
+        "nav-prices":"Price List",
+        "nav-cta":"Request a Commission",
+        "hero-open":"🦊 Open for Commissions",
+        "hero-title":"Expressive furry art — headshots, chibis, fullbodies & ref sheets.",
+        "hero-sub":"Hi! I’m <strong>HidoiTamashi</strong>. I create character-focused, stylized furry illustrations with clean lines and bold shapes. Friendly workflow, clear pricing, and fast communication.",
+        "btn-see-prices":"See Prices",
+        "btn-contact":"Contact Me",
+        "hero-vibe-title":"Your character, your vibe",
+        "hero-vibe-sub":"Drop me a short brief + refs — I’ll handle the poses, energy, and polish ✨",
+        "prices-title":"Price List (EUR)",
+        "prices-note":"Modest baseline pricing for personal use. USD shown for convenience. Final quotes may vary for complexity.",
+        "p-hs":"Headshot / Icon",
+        "p-hs-1":"Clean lines, simple background",
+        "p-hs-2":"Great for avatars & stickers",
+        "p-bust":"Bust / Chest-up",
+        "p-bust-1":"Extra expression & detail",
+        "p-bust-2":"Basic shading",
+        "p-half":"Half-Body",
+        "p-half-1":"Dynamic pose",
+        "p-half-2":"Simple prop OK",
+        "p-full":"Fullbody",
+        "p-full-1":"Clean lineart + flat colors",
+        "p-full-2":"Shaded version: +€10",
+        "p-chibi":"Chibi",
+        "p-chibi-1":"Super cute style",
+        "p-chibi-2":"Great for emotes",
+        "p-ref":"Ref Sheet (2-view)",
+        "p-ref-1":"Front + back, color palette",
+        "p-ref-2":"Small details & notes",
+        "addons-title":"Add-ons",
+        "addons-1":"Extra character: +70% of base price",
+        "addons-2":"Complex design/armor/wings: +€10–€25",
+        "addons-3":"Simple background: included • Scene background: +€10–€30",
+        "addons-4":"Commercial license (merch, promo, etc.): +50%",
+        "addons-note":"SFW only. No hateful or illegal content. If unsure, just ask!",
+        "flow-title":"How It Works",
+        "flow-1-title":"1) Brief & Quote",
+        "flow-1":"Send refs + short description (pose/mood). I’ll confirm a final quote and ETA.",
+        "flow-2-title":"2) Invoice & Sketch",
+        "flow-2":"Payment upfront via PayPal or Ko-fi. I’ll share a clean sketch for approval.",
+        "flow-3-title":"3) Edits & Delivery",
+        "flow-3":"Two minor revisions included at sketch/color stage. Final PNG/JPG in high-res.",
+        "tos-title":"Terms of Service",
+        "tos-1":"<strong>Payment:</strong> upfront via PayPal or Ko-fi in EUR (USD accepted).",
+        "tos-2":"<strong>Turnaround:</strong> typically 1–3 weeks depending on complexity and queue.",
+        "tos-3":"<strong>Revisions:</strong> 2 minor revisions included; extra edits may incur fees.",
+        "tos-4":"<strong>Usage:</strong> personal use only unless a commercial license is purchased (+50%).",
+        "tos-5":"<strong>Refunds:</strong> full refund before sketch starts; 50% after sketch; none after lineart approval.",
+        "tos-6":"<strong>Posting:</strong> I retain rights to showcase the artwork in my portfolio/socials. Credit appreciated if you post.",
+        "tos-7":"<strong>Files:</strong> final delivery in PNG/JPG; source files not included by default.",
+        "contact-title":"Contact & Request Form",
+        "contact-sub":"Use the form to request a quote. I’ll reply by email.",
+        "f-name-label":"Your name",
+        "f-email-label":"Email",
+        "f-type-label":"Commission type",
+        "f-deadline-label":"Deadline (optional)",
+        "f-details-label":"Brief & references (links allowed)",
+        "f-submit":"Send Request",
+        "contact-note":"Submits via email (mailto). If your email client doesn’t open, write to ",
+        "rights":"All rights reserved."
+      },
+      it: {
+        "brand-role":"Artista Furry",
+        "nav-prices":"Listino Prezzi",
+        "nav-cta":"Richiedi una Commissione",
+        "hero-open":"🦊 Commissioni Aperte",
+        "hero-title":"Arte furry espressiva — headshot, chibi, fullbody e ref sheet.",
+        "hero-sub":"Ciao! Sono <strong>HidoiTamashi</strong>. Creo illustrazioni furry stilizzate e focalizzate sul personaggio, con linee pulite e forme decise. Flusso amichevole, prezzi chiari e comunicazione veloce.",
+        "btn-see-prices":"Vedi Prezzi",
+        "btn-contact":"Contattami",
+        "hero-vibe-title":"Il tuo personaggio, la tua vibrazione",
+        "hero-vibe-sub":"Mandami un breve brief + riferimenti — penserò io a pose, energia e rifinitura ✨",
+        "prices-title":"Listino Prezzi (EUR)",
+        "prices-note":"Prezzi base modesti per uso personale. USD indicativi. Il preventivo finale può variare per complessità.",
+        "p-hs":"Headshot / Icona",
+        "p-hs-1":"Linee pulite, sfondo semplice",
+        "p-hs-2":"Perfetto per avatar & sticker",
+        "p-bust":"Busto / Torso",
+        "p-bust-1":"Più espressione & dettagli",
+        "p-bust-2":"Ombreggiatura base",
+        "p-half":"Mezzo Corpo",
+        "p-half-1":"Posa dinamica",
+        "p-half-2":"Accessorio semplice OK",
+        "p-full":"Fullbody",
+        "p-full-1":"Lineart pulita + colori piatti",
+        "p-full-2":"Versione ombreggiata: +€10",
+        "p-chibi":"Chibi",
+        "p-chibi-1":"Stile super carino",
+        "p-chibi-2":"Ottimo per emote",
+        "p-ref":"Ref Sheet (2 viste)",
+        "p-ref-1":"Fronte + retro, palette colori",
+        "p-ref-2":"Piccoli dettagli & note",
+        "addons-title":"Extra",
+        "addons-1":"Personaggio aggiuntivo: +70% del prezzo base",
+        "addons-2":"Design complesso/armatura/ali: +€10–€25",
+        "addons-3":"Sfondo semplice: incluso • Sfondo scena: +€10–€30",
+        "addons-4":"Licenza commerciale (merch, promo, ecc.): +50%",
+        "addons-note":"Solo SFW. Niente contenuti d’odio o illegali. Se hai dubbi, chiedi pure!",
+        "flow-title":"Come Funziona",
+        "flow-1-title":"1) Brief & Preventivo",
+        "flow-1":"Invia riferimenti + breve descrizione (posa/mood). Confermo un preventivo finale e una stima.",
+        "flow-2-title":"2) Fattura & Sketch",
+        "flow-2":"Pagamento anticipato via PayPal o Ko-fi. Condividerò uno sketch pulito per l’approvazione.",
+        "flow-3-title":"3) Revisioni & Consegna",
+        "flow-3":"Due piccole revisioni incluse a sketch/colori. PNG/JPG finale in alta risoluzione.",
+        "tos-title":"Termini di Servizio",
+        "tos-1":"<strong>Pagamento:</strong> anticipato via PayPal o Ko-fi in EUR (USD accettati).",
+        "tos-2":"<strong>Tempi:</strong> tipicamente 1–3 settimane in base a complessità e coda.",
+        "tos-3":"<strong>Revisioni:</strong> 2 minori incluse; modifiche extra possono avere un costo.",
+        "tos-4":"<strong>Uso:</strong> uso personale salvo acquisto licenza commerciale (+50%).",
+        "tos-5":"<strong>Rimborsi:</strong> totale prima dello sketch; 50% dopo lo sketch; nessuno dopo l’approvazione del lineart.",
+        "tos-6":"<strong>Pubblicazione:</strong> mi riservo il diritto di mostrare l’opera nel portfolio/social. Gradito il credito se pubblichi.",
+        "tos-7":"<strong>File:</strong> consegna finale in PNG/JPG; file sorgenti non inclusi di default.",
+        "contact-title":"Contatti & Richiesta Preventivo",
+        "contact-sub":"Usa il form per richiedere un preventivo. Ti risponderò via email.",
+        "f-name-label":"Il tuo nome",
+        "f-email-label":"Email",
+        "f-type-label":"Tipo di commissione",
+        "f-deadline-label":"Scadenza (opzionale)",
+        "f-details-label":"Brief & riferimenti (link consentiti)",
+        "f-submit":"Invia Richiesta",
+        "contact-note":"Invia via email (mailto). Se il client email non si apre, scrivi a ",
+        "rights":"Tutti i diritti riservati."
+      }
+    };
+    const langToggle = document.getElementById('langToggle');
+    const allT = document.querySelectorAll('[data-t]');
+    const savedLang = localStorage.getItem('ht_lang') || 'en';
+    function applyLang(l){
+      allT.forEach(el => {
+        const key = el.getAttribute('data-t');
+        if(strings[l] && strings[l][key]){
+          el.innerHTML = strings[l][key];
+        }
+      });
+      document.documentElement.lang = l;
+      localStorage.setItem('ht_lang', l);
+      langToggle.textContent = l.toUpperCase() === 'EN' ? 'EN / IT' : 'IT / EN';
+    }
+    applyLang(savedLang);
+    langToggle.addEventListener('click', ()=>{
+      const next = (localStorage.getItem('ht_lang') || 'en') === 'en' ? 'it' : 'en';
+      applyLang(next);
+    });
+
+    // Mailto form submit
+    document.getElementById('commissionForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const f = new FormData(e.target);
+      const name = encodeURIComponent(f.get('name'));
+      const email = encodeURIComponent(f.get('email'));
+      const ctype = encodeURIComponent(f.get('type'));
+      const deadline = encodeURIComponent(f.get('deadline') || 'N/A');
+      const details = encodeURIComponent(f.get('details'));
+      const subject = `[Commission Request] ${ctype} — ${name}`;
+      const body = `Name: ${name}%0AEmail: ${email}%0AType: ${ctype}%0ADeadline: ${deadline}%0A%0ADetails:%0A${details}`;
+      window.location.href = `mailto:commissions@hidoitamashi.art?subject=${subject}&body=${body}`;
+    });
+  </script>
+</body>
+</html>
